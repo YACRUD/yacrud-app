@@ -19,10 +19,12 @@ public class Person {
     public static final String KEYWORD_FIELD_SUFFIX = "keyword";
 
     // These fields will be used for sorting
-    @SuppressWarnings("java:S115")
+    @SuppressWarnings(value = "java:S115")
     public enum SortField {
         firstName, lastName, email;
 
+        // As enabling "fielddata" didn't work properly for sorting (terms were tokenized),
+        // using the following workaround:
         // Sorting must be applied to the "keyword" type fields
         @Override
         public String toString() {
@@ -43,9 +45,8 @@ public class Person {
     private String id;
 
     @MultiField(
-            // use , "fielddata = true" to be be able to Sort on them natively
             // TODO: find a way to use the "Keyword" fields for sorting
-            mainField = @Field(type = FieldType.Text, fielddata = true),
+            mainField = @Field(type = FieldType.Text),
             otherFields = {
                     @InnerField(suffix = KEYWORD_FIELD_SUFFIX, type = FieldType.Keyword)
             }
@@ -53,7 +54,7 @@ public class Person {
     private String firstName;
 
     @MultiField(
-            mainField = @Field(type = FieldType.Text, fielddata = true),
+            mainField = @Field(type = FieldType.Text),
             otherFields = {
                     @InnerField(suffix = KEYWORD_FIELD_SUFFIX, type = FieldType.Keyword)
             }
@@ -61,7 +62,7 @@ public class Person {
     private String lastName;
 
     @MultiField(
-            mainField = @Field(type = FieldType.Text, fielddata = true),
+            mainField = @Field(type = FieldType.Text),
             otherFields = {
                     @InnerField(suffix = KEYWORD_FIELD_SUFFIX, type = FieldType.Keyword)
             }

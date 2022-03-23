@@ -33,6 +33,15 @@ public class PersonController extends BaseController {
         this.personService = personService;
     }
 
+    @ApiOperation(
+            value = "This method is used to get the total number of documents",
+            authorizations = {@Authorization(value = "auth")}
+    )
+    @GetMapping("count")
+    public Mono<Long> count() {
+        return personService.count();
+    }
+
     @GetMapping
     @ApiOperation(
             value = "This method is used to get all clients with paging and soring support.",
@@ -106,4 +115,5 @@ public class PersonController extends BaseController {
         log.debug("Bulk upload");
         return personService.saveAll(personsDto);
     }
+
 }

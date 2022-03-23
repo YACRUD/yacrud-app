@@ -87,6 +87,11 @@ public class PersonServiceImpl implements PersonService {
                 .retryWhen(esRetrySpec());
     }
 
+    @Override
+    public Mono<Long> count() {
+        return repository.count().retryWhen(esRetrySpec());
+    }
+
     /**
      * Return a retry specification for retrying failed requests to Elasticsearch.
      * Currently, a progressively increasing delay between three attempts: roughly at 2, 4, 8-second intervals.

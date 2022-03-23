@@ -26,7 +26,7 @@ public class Person {
         // Sorting must be applied to the "keyword" type fields
         @Override
         public String toString() {
-            return name() + KEYWORD_FIELD_SUFFIX;
+            return name() + "." + KEYWORD_FIELD_SUFFIX;
         }
     }
 

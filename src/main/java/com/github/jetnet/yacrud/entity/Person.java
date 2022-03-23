@@ -17,8 +17,15 @@ import org.springframework.data.elasticsearch.annotations.*;
 public class Person {
 
     // These fields will be used for sorting
+    @SuppressWarnings("java:S115")
     public enum SortField {
-        firstName, lastName, email
+        firstName, lastName, email;
+
+        // Sorting must be applied to the "keyword" type fields
+        @Override
+        public String toString() {
+            return name() + ".keyword";
+        }
     }
 
     public Person() {

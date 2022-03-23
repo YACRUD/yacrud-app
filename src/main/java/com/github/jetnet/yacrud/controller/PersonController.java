@@ -1,6 +1,7 @@
 package com.github.jetnet.yacrud.controller;
 
 import com.github.jetnet.yacrud.dto.PersonDto;
+import com.github.jetnet.yacrud.dto.CountDto;
 import com.github.jetnet.yacrud.entity.Person;
 import com.github.jetnet.yacrud.service.PersonService;
 import io.swagger.annotations.ApiOperation;
@@ -38,7 +39,7 @@ public class PersonController extends BaseController {
             authorizations = {@Authorization(value = "auth")}
     )
     @GetMapping("count")
-    public Mono<Long> count() {
+    public Mono<CountDto> count() {
         return personService.count();
     }
 

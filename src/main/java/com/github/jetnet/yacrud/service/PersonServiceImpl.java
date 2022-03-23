@@ -1,6 +1,7 @@
 package com.github.jetnet.yacrud.service;
 
 import com.github.jetnet.yacrud.dto.PersonDto;
+import com.github.jetnet.yacrud.dto.CountDto;
 import com.github.jetnet.yacrud.entity.Person;
 import com.github.jetnet.yacrud.repository.ESRepository;
 import com.github.jetnet.yacrud.util.EntityDtoUtil;
@@ -88,8 +89,11 @@ public class PersonServiceImpl implements PersonService {
     }
 
     @Override
-    public Mono<Long> count() {
-        return repository.count().retryWhen(esRetrySpec());
+    public Mono<CountDto> count() {
+        return repository.count()
+                .filter(Objects::nonNull)
+                .map(c -> new CountDto(c))
+                .retryWhen(esRetrySpec());
     }
 
     /**

@@ -15,4 +15,6 @@ public interface PersonService {
     Mono<PersonDto> deletePerson(String id);
 
     Flux<PersonDto> getAll(Pageable pageable);
+
+    Mono<Object> saveAll(Flux<PersonDto> persons);
 }

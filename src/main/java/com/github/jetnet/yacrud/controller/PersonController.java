@@ -100,4 +100,10 @@ public class PersonController extends BaseController {
         return personService.deletePerson(id).switchIfEmpty(Mono.error(
                 new ResponseStatusException(HttpStatus.NOT_FOUND, MSG_DOCUMENT_DOES_NOT_EXIST)));
     }
+
+    @PostMapping("bulk")
+    public Mono<Object> saveAll(@RequestBody final Flux<PersonDto> personsDto) {
+        log.debug("Bulk upload");
+        return personService.saveAll(personsDto);
+    }
 }

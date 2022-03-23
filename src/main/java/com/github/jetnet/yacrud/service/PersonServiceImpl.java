@@ -80,6 +80,13 @@ public class PersonServiceImpl implements PersonService {
                 .map(EntityDtoUtil::toDto).retryWhen(esRetrySpec());
     }
 
+    @Override
+    public Mono<Object> saveAll(Flux<PersonDto> personsDto) {
+        return repository.saveAll(personsDto.map(EntityDtoUtil::toEntity))
+                .then(Mono.empty())
+                .retryWhen(esRetrySpec());
+    }
+
     /**
      * Return a retry specification for retrying failed requests to Elasticsearch.
      * Currently, a progressively increasing delay between three attempts: roughly at 2, 4, 8-second intervals.

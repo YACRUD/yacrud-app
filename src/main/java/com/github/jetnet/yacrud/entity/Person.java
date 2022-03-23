@@ -16,6 +16,8 @@ import org.springframework.data.elasticsearch.annotations.*;
 @Document(indexName = "persons")
 public class Person {
 
+    public static final String KEYWORD_FIELD_SUFFIX = "keyword";
+
     // These fields will be used for sorting
     @SuppressWarnings("java:S115")
     public enum SortField {
@@ -24,7 +26,7 @@ public class Person {
         // Sorting must be applied to the "keyword" type fields
         @Override
         public String toString() {
-            return name() + ".keyword";
+            return name() + KEYWORD_FIELD_SUFFIX;
         }
     }
 
@@ -45,7 +47,7 @@ public class Person {
             // TODO: find a way to use the "Keyword" fields for sorting
             mainField = @Field(type = FieldType.Text, fielddata = true),
             otherFields = {
-                    @InnerField(suffix = "keyword", type = FieldType.Keyword)
+                    @InnerField(suffix = KEYWORD_FIELD_SUFFIX, type = FieldType.Keyword)
             }
     )
     private String firstName;
@@ -53,7 +55,7 @@ public class Person {
     @MultiField(
             mainField = @Field(type = FieldType.Text, fielddata = true),
             otherFields = {
-                    @InnerField(suffix = "keyword", type = FieldType.Keyword)
+                    @InnerField(suffix = KEYWORD_FIELD_SUFFIX, type = FieldType.Keyword)
             }
     )
     private String lastName;
@@ -61,7 +63,7 @@ public class Person {
     @MultiField(
             mainField = @Field(type = FieldType.Text, fielddata = true),
             otherFields = {
-                    @InnerField(suffix = "keyword", type = FieldType.Keyword)
+                    @InnerField(suffix = KEYWORD_FIELD_SUFFIX, type = FieldType.Keyword)
             }
     )
     private String email;
